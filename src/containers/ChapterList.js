@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button, TouchableNativeFeedback} from 'react-native';
-import {Icon} from 'react-native-elements';
+import React, {Component} from 'react'
+import {StyleSheet, Text, View, Button, TouchableNativeFeedback} from 'react-native'
+import {Icon} from 'react-native-elements'
+import { connect } from 'react-redux'
 
-export default class ChapterList extends Component {
+class ChapterList extends Component {
 
   static navigationOptions = (props) => ({
     title: 'Qur\'an - Guided Verses',
@@ -14,7 +15,11 @@ export default class ChapterList extends Component {
                   onPress={() => props.navigation.openDrawer()}>
                     <Icon name='menu' iconStyle={styles.menu} size={35}/>
                 </TouchableNativeFeedback>
-  });
+  })
+
+  componentDidMount() {
+    this.props.screenProps.fetchChapters()
+  }
 
   render() {
     return (
@@ -28,7 +33,7 @@ export default class ChapterList extends Component {
           buttonStyle={styles.button}
         />
       </View>
-    );
+    )
   }
 }
 
@@ -57,4 +62,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight:10,
   }
-});
+})
+
+function mapStateToProps(state) {
+  return {
+    chapters: state.chapters
+  }
+}
+
+export default connect(mapStateToProps)(ChapterList)

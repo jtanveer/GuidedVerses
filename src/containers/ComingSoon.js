@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {Component} from 'react'
+import {StyleSheet, Text, View} from 'react-native'
 
 export default class ComingSoon extends Component {
 
@@ -17,7 +17,7 @@ export default class ComingSoon extends Component {
         <Text style={styles.instructions}>There will be many more features in our upcoming releases</Text>
         <Text style={styles.instructions}>Stay tuned for the updates</Text>
       </View>
-    );
+    )
   }
 }
 
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   }
-});
+})

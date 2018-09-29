@@ -6,10 +6,10 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import reducer from './src/reducers'
-import {name as appName} from './app.json';
+import { name as appName } from './app.json'
 
 // middleware that logs actions
-const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__  });
+const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__  })
 
 function configureStore(initialState) {
   const enhancer = compose(
@@ -17,16 +17,16 @@ function configureStore(initialState) {
       thunkMiddleware, // lets us dispatch() functions
       loggerMiddleware,
     ),
-  );
-  return createStore(reducer, initialState, enhancer);
+  )
+  return createStore(reducer, initialState, enhancer)
 }
 
-const store = configureStore({});
-
+const store = configureStore({})
+console.log(store)
 const App = () => (
   <Provider store={store}>
     <AppContainer />
   </Provider>
 )
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => App)

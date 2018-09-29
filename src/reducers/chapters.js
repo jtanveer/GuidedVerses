@@ -6,8 +6,8 @@ export const chapters = createReducer({}, {
     let newState = {}
     action.chapters.forEach( (chapter) => {
       let id = chapter.chapter_number
-      newState[id] = Object.assign({}, chapter, { id });
-    });
-    return newState;
+      newState[id] = Object.assign({}, chapter, { id })
+    })
+    return newState
   },
-});
+})
