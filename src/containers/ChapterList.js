@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import {StyleSheet, Text, View, Button, TouchableNativeFeedback} from 'react-native'
-import {Icon} from 'react-native-elements'
+import React, { Component } from 'react'
+import { StyleSheet, Text, View, TouchableNativeFeedback, TouchableOpacity, FlatList } from 'react-native'
+import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 
 class ChapterList extends Component {
@@ -17,52 +17,64 @@ class ChapterList extends Component {
                 </TouchableNativeFeedback>
   })
 
-  componentDidMount() {
-    this.props.screenProps.fetchChapters()
+  constructor(props) {
+    super(props)
+    this.state = { loading: true }
   }
 
+  componentDidMount() {
+    this.setState({ loading: true })
+    this.props.screenProps.fetchChapters().then(res => {
+      this.setState({ loading: false})
+    })
+  }
+
+  renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() =>
+        this.props.navigation.navigate('Chapter', { chapter_number: item.chapter_number })
+      }>
+      <Text style={styles.text}>{item.chapter_name_ar_english}</Text>
+    </TouchableOpacity>
+  );
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to GuidedVerses!</Text>
-        <Text style={styles.instructions}>Here you will see the list of chapters</Text>
-        <Text style={styles.instructions}>After selecting a chapter, you will be able to read its verses</Text>
-        <Button
-          onPress={() => this.props.navigation.navigate('Chapter', { title: 'Chapter' })}
-          title="Learn More"
-          buttonStyle={styles.button}
+    const { chapters } = this.props
+    if (!this.state.loading) {
+      return (
+        <FlatList
+          styles={styles.container}
+          data={chapters}
+          renderItem={this.renderItem}
         />
-      </View>
-    )
+      );
+    } else {
+      return <View/>
+    }
+
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  button: {
-    color: '#841584',
-    padding: 10,
-  },
   menu: {
     marginLeft: 10,
     marginRight:10,
+  },
+  container: {
+    flex: 1
+  },
+  item: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc'
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
   }
-})
+});
+
 
 function mapStateToProps(state) {
   return {

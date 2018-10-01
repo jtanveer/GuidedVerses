@@ -4,7 +4,7 @@ import Api from '../lib/api'
 export function fetchChapters() {
   return (dispatch, getState) => {
     return Api.get('/chapter_headers').then(resp => {
-      dispatch(setChapters({chapters: resp}))
+      dispatch(setChapters({ chapters: resp }))
     }).catch( (ex) => {
       console.log(ex)
     })

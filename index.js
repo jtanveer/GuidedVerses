@@ -22,7 +22,6 @@ function configureStore(initialState) {
 }
 
 const store = configureStore({})
-console.log(store)
 const App = () => (
   <Provider store={store}>
     <AppContainer />
